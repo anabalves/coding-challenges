@@ -1,0 +1,9 @@
+Alabama	Christyna Testro x 3,Millicent Greensitt x 2,Carlie Evamy x 1,Derril Northam x 1
+Alaska	Aile Cettell x 2,Brittni Josefovic x 2,Derril Northam x 2,Amity Dubble x 1,Carlyle Mougenel x 1,Finley De Filippo x 1
+Arizona	Amity Dubble x 3,Carlie Evamy x 3,Aile Cettell x 1,Carlyle Mougenel x 1,Christyna Testro x 1,Derril Northam x 1
+Arkansas	De witt Monroe x 2
+California	Carlie Evamy x 9,De witt Monroe x 8,Derril Northam x 8,Amity Dubble x 7,Aile Cettell x 6,Millicent Greensitt x 6,Christyna Testro x 5,Brittni Josefovic x 4,Carlyle Mougenel x 4,Finley De Filippo x 2
+Colorado	De witt Monroe x 5,Christyna Testro x 3,Carlie Evamy x 2,Finley De Filippo x 2,Aile Cettell x 1,Brittni Josefovic x 1,Carlyle Mougenel x 1
+Connecticut	Carlie Evamy x 3,Derril Northam x 3,Brittni Josefovic x 1
+Delaware	Derril Northam x 1,Millicent Greensitt x 1
+District of Columbi	Christyna Testro x 4,Carlie Evamy x 2,Finley De Filippo x 2,Aile Cettell x 1,Amity Dubble x 1,Brittni Josefovic x 1,Carlyle Mougenel x 1,Derril Northam x 1,Millice Silcock x 1
