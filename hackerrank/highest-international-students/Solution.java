@@ -1,3 +1,5 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -5,8 +7,8 @@ import java.io.InputStreamReader;
 import java.io.FileWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Map;
 
 class Result {
 
@@ -24,76 +26,82 @@ class Result {
      *
      */
     public static String highestInternationalStudents(String firstCity, String secondCity) {
-        int page = 1;
-        int totalPages = 1;
+        Map<String, University> topUniversityByCity = new HashMap<>();
+        topUniversityByCity.put(firstCity.toLowerCase(), null);
+        topUniversityByCity.put(secondCity.toLowerCase(), null);
 
-        University topUniversityFirstCity = null;
-        University topUniversitySecondCity = null;
+        int currentPage = 1;
+        int totalPages = 1;
 
         try {
             do {
-                JSONObject response = fetchPage(page);
-                totalPages = response.getInt("total_pages");
-
-                JSONArray universities = response.getJSONArray("data");
+                JSONObject pageData = fetchUniversitiesPage(currentPage++);
+                totalPages = pageData.getInt("total_pages");
+                JSONArray universities = pageData.getJSONArray("data");
 
                 for (int i = 0; i < universities.length(); i++) {
-                    JSONObject university = universities.getJSONObject(i);
-                    JSONObject location = university.getJSONObject("location");
+                    JSONObject universityJson = universities.getJSONObject(i);
+                    String city = universityJson.getJSONObject("location").optString("city", "");
 
-                    String city = location.getString("city");
-                    String name = university.getString("university");
-                    String internationalStr = university.getString("international_students")
-                                                        .replace(",", "").trim();
+                    boolean isInFirstCity = city.equalsIgnoreCase(firstCity);
+                    boolean isInSecondCity = city.equalsIgnoreCase(secondCity);
+                    if (!isInFirstCity && !isInSecondCity) continue;
 
-                    int internationalCount = internationalStr.isEmpty() ? 0 : Integer.parseInt(internationalStr);
+                    String keyCity = isInFirstCity ? firstCity.toLowerCase() : secondCity.toLowerCase();
+                    String name = universityJson.optString("university", "");
 
-                    University current = new University(name, internationalCount);
+                    String rawCount = universityJson.optString("international_students", "").replace(",", "").trim();
+                    if (rawCount.isEmpty()) continue;
 
-                    if (city.equalsIgnoreCase(firstCity)) {
-                        if (topUniversityFirstCity == null || current.internationalStudents > topUniversityFirstCity.internationalStudents) {
-                            topUniversityFirstCity = current;
-                        }
-                    } else if (city.equalsIgnoreCase(secondCity)) {
-                        if (topUniversitySecondCity == null || current.internationalStudents > topUniversitySecondCity.internationalStudents) {
-                            topUniversitySecondCity = current;
-                        }
+                    int internationalCount = Integer.parseInt(rawCount);
+                    University currentUniversity = new University(name, internationalCount);
+                    University currentTop = topUniversityByCity.get(keyCity);
+
+                    if (currentTop == null || currentUniversity.internationalStudents > currentTop.internationalStudents) {
+                        topUniversityByCity.put(keyCity, currentUniversity);
                     }
                 }
-
-                page++;
-            } while (page <= totalPages);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            } while (currentPage <= totalPages);
+        } catch (Exception ex) {
+            System.err.println("Error fetching data: " + ex.getMessage());
+            return "";
         }
 
-        return (topUniversityFirstCity != null)
-        ? topUniversityFirstCity.name
-        : (topUniversitySecondCity != null ? topUniversitySecondCity.name : "");    
+        University topFirstCity = topUniversityByCity.get(firstCity.toLowerCase());
+        University topSecondCity = topUniversityByCity.get(secondCity.toLowerCase());
+
+        if (topFirstCity != null && topSecondCity != null) {
+            return topFirstCity.internationalStudents > topSecondCity.internationalStudents
+                    ? topFirstCity.universityName
+                    : topSecondCity.universityName;
+        }
+
+        return topFirstCity != null ? topFirstCity.universityName
+                : topSecondCity != null ? topSecondCity.universityName
+                : "";
     }
 
-    private static JSONObject fetchPage(int pageNumber) throws Exception {
+    private static JSONObject fetchUniversitiesPage(int pageNumber) throws IOException {
         URL url = new URL(BASE_URL + pageNumber);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-            StringBuilder responseBuffer = new StringBuilder();
+            StringBuilder jsonBuilder = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
-                responseBuffer.append(line);
+                jsonBuilder.append(line);
             }
-            return new JSONObject(responseBuffer.toString());
+            return new JSONObject(jsonBuilder.toString());
         }
     }
 
     static class University {
-        String name;
+        String universityName;
         int internationalStudents;
 
-        University(String name, int internationalStudents) {
-            this.name = name;
+        University(String universityName, int internationalStudents) {
+            this.universityName = universityName;
             this.internationalStudents = internationalStudents;
         }
     }
