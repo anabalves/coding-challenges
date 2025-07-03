@@ -63,8 +63,6 @@ Languages used across challenges:
 
 3. Open and run the solution files using your preferred IDE or terminal.
 
-> Some folders may include a `Problem.md` for context, especially when platforms don't allow direct export.
-
 ## 🤝 Contributions
 
 Want to suggest improvements, fixes, or submit new solutions?
