@@ -62,13 +62,3 @@ Languages used across challenges:
 2. Navigate to the platform and challenge folder you're interested in.
 
 3. Open and run the solution files using your preferred IDE or terminal.
-
-## 🤝 Contributions
-
-Want to suggest improvements, fixes, or submit new solutions?
-Feel free to fork the repo and open a PR. Let's learn together! 🌱
-
-## 🔗 Connect
-
-- [GitHub Profile](https://github.com/anabalves)
-- [LinkedIn](https://www.linkedin.com/in/anabalvess/)
