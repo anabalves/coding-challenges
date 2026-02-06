@@ -13,6 +13,7 @@ Each platform is organized into its own folder. Inside, you'll find individual s
 coding-challenges/
 ├── codeforces/
 ├── codewars/
+├── codility/
 ├── hackerrank/
 │ ├── a-very-big-sum/
 │ ├── compare-the-triplets/
@@ -41,6 +42,7 @@ Solutions are sourced from:
 - [Codeforces](https://codeforces.com/)
 - [Codewars](https://www.codewars.com/)
 - [Project Euler](https://projecteuler.net/)
+- [Codility](https://www.codility.com/+)
 
 ## 🛠️ Technologies
 

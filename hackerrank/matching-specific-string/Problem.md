@@ -4,7 +4,7 @@
 
 A regular expression is a sequence of characters that defines a search pattern. It is mainly used for string pattern matching.
 
-In this challenge, your task is to find how many times the word `hackerrank` appears in a given block of text. The match must be **case-sensitive** and **exact** — no variations allowed.
+In this challenge, your task is to find how many times the word `hackerrank` appears in a given block of text. The match must be **case-sensitive** and **exact**, no variations allowed.
 
 ---
 
@@ -33,7 +33,7 @@ int countOccurrences(String input, String word)
 
 ### Constraints
 
-- Only lowercase `hackerrank` should be matched — other variations like `HackerRank` or `Hackerrank` should not match.
+- Only lowercase `hackerrank` should be matched, other variations like `HackerRank` or `Hackerrank` should not match.
 
 ---
 
